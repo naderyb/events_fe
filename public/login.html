@@ -11,14 +11,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css" />
   </head>
-
   <body class="bg-gray-900 text-white">
     <section class="hero relative py-4 text-center bg-gradient-to-br from-gray-800 to-gray-900 px-4">
       <div class="mb-4 flex items-center justify-center">
-        <img src="/assets/logo nexus 1.svg" alt="Logo Nexus Club" class="h-12 md:h-16" />
+        <img
+          src="/assets/logo nexus 1.svg"
+          alt="Logo Nexus Club"
+          class="h-12 md:h-16"
+        />
       </div>
       <div class="max-w-3xl mx-auto">
-        <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Connexion Admin</h1>
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
+          Connexion Admin
+        </h1>
         <p class="text-sm mb-8">
           Connectez-vous avec votre nom d'utilisateur et mot de passe pour accéder au dashboard.
         </p>
@@ -57,7 +62,7 @@
     </footer>
 
     <script>
-      // Define your backend API URL (replace with your actual Render backend URL)
+      // Define your backend API URL directly (make sure this is correct)
       const API_URL = "https://eventsnexus.onrender.com";
 
       // Attach event listener for the admin login form
@@ -65,33 +70,32 @@
       if (adminLoginForm) {
         adminLoginForm.addEventListener("submit", function (e) {
           e.preventDefault();
-          const formData = new FormData(adminLoginForm);
-          const username = formData.get("username");
-          const password = formData.get("password");
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
 
           fetch(`${API_URL}/admin/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, password }),
+            body: JSON.stringify({ username, password })
           })
             .then(async (response) => {
+              // Check if response is OK (status code 200-299)
               if (!response.ok) {
-                // Read the text (likely HTML error page) for debugging
+                // Read the response text (likely HTML error page) for debugging
                 const text = await response.text();
                 throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
               }
               return response.json();
             })
             .then((result) => {
+              console.log("Success:", result);
               if (!result.success) {
                 document.getElementById("errorMessage").innerText =
                   result.message || "Erreur lors de la connexion.";
               } else {
-                // On success, redirect to the admin dashboard with query parameters
                 const admin = result.admin;
-                window.location.href = `/admin.html?username=${encodeURIComponent(
-                  admin.username
-                )}&fullName=${encodeURIComponent(admin.fullName)}&role=${encodeURIComponent(admin.role)}`;
+                // Redirect to admin dashboard with query parameters
+                window.location.href = `/admin.html?username=${encodeURIComponent(admin.username)}&fullName=${encodeURIComponent(admin.fullName)}&role=${encodeURIComponent(admin.role)}`;
               }
             })
             .catch((err) => {
@@ -102,7 +106,6 @@
         });
       }
     </script>
-    <!-- Load shared script (for registration modal, countdown, etc.) -->
-    <script src="script.js"></script>
+    <!-- Optionally load any other scripts -->
   </body>
 </html>
