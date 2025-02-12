@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   
     // Countdown Timer (runs on all pages, but checks if elements exist)
-    const targetDate = new Date("Feb 13, 2025 00:00:00").getTime();
+    const targetDate = new Date("Feb 27, 2025 00:00:00").getTime();
     function updateCountdown() {
       const now = new Date().getTime();
       const gap = targetDate - now;
