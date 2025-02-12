@@ -87,3 +87,24 @@ function updateCountdown() {
 updateCountdown();
 const countdownInterval = setInterval(updateCountdown, 1000);
 
+// Define your backend API URL directly
+const API_URL = "https://eventsnexus.onrender.com";
+
+// Example API call:
+fetch(`${API_URL}/process-form`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    nomPrenom: "John Doe",
+    email: "john@example.com",
+    formation: "Computer Science",
+    motivation: "I am motivated!"
+  })
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(err => console.error("API error:", err));
+
+
